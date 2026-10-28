@@ -1,0 +1,111 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import Icon from '../components/Icon.astro';
+import Pic from '../components/Pic.astro';
+import Faq from '../components/Faq.astro';
+import Cta from '../components/Cta.astro';
+import Rsvp from '../components/Rsvp.astro';
+import { getContent, type Lang } from '../i18n/utils';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = getContent(lang).education;
+const tones = ['', 'icon-bubble--jade', 'icon-bubble--maroon'];
+---
+<Base lang={lang} routeKey="education" title={t.meta.title} description={t.meta.description}>
+  <Hero data={t.hero} lang={lang} badgeStyle="chips" />
+
+  <section class="sec sec--alt">
+    <div class="container">
+      <SectionHead eyebrow={t.pillars.eyebrow} title={t.pillars.title} lead={t.pillars.lead} center />
+      <div class="grid g3" data-stagger>
+        {t.pillars.items.map((p, i) => (
+          <article class="card card--lift pillar">
+            <span class="zh pillar__zh" aria-hidden="true">{p.zh}</span>
+            <span class:list={['icon-bubble', tones[i]]}><Icon name={p.icon} /></span>
+            <span class="pillar__num">{p.num}</span>
+            <h3 class="h3">{p.title}</h3>
+            <p>{p.text}</p>
+            <ul class="ticks" style="margin-top:auto"><li><Icon name="check_circle" />{p.point}</li></ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id={t.programs.id}>
+    <div class="container">
+      <SectionHead eyebrow={t.programs.eyebrow} title={t.programs.title} lead={t.programs.lead} />
+      <p class="chip chip--jade" style="margin:-1.5rem 0 2rem" data-reveal><Icon name="calendar_today" />{t.programs.schedule}</p>
+      <div class="grid g2" data-stagger>
+        {t.programs.items.map((a) => (
+          <article class="card card--lift age">
+            <div class="age__top"><span class="chip">{a.age}</span><span class="chip chip--line">{a.group}</span></div>
+            <h3 class="h3">{a.title}<small>{a.sub}</small></h3>
+            <p>{a.text}</p>
+            <span class="focus">{t.programs.focusLabel}</span>
+            <ul class="ticks">{a.focus.map((f) => <li><Icon name="check_circle" />{f}</li>)}</ul>
+            <div class="age__foot">
+              <span><Icon name={a.mentor.icon} />{a.mentor.text}</span>
+              <a class="btn btn--primary btn--sm" href="#gabung">{a.cta}</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--alt">
+    <div class="container">
+      <SectionHead eyebrow={t.activities.eyebrow} title={t.activities.title} lead={t.activities.lead} center />
+      <div class="grid g4" data-stagger>
+        {t.activities.items.map((a) => (
+          <article class="card card--lift feat">
+            <span class="icon-bubble icon-bubble--jade"><Icon name={a.icon} /></span>
+            <h3 class="h3">{a.title}</h3><p>{a.text}</p>
+          </article>
+        ))}
+      </div>
+      <div class="qband" style="margin-top:clamp(3rem,6vw,5rem)" data-reveal>
+        <span class="icon-bubble"><Icon name="format_quote" /></span>
+        <p class="quote">{t.quote.text}</p>
+        <p class="quote-by">{t.quote.by}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="container">
+      <SectionHead eyebrow={t.gallery.eyebrow} title={t.gallery.title} lead={t.gallery.lead} />
+      <div class="grid g4" data-stagger>
+        {t.gallery.items.map((g) => (
+          <figure class="card ph" style="margin:0">
+            <div class="ph__img"><Pic k={g.img} alt={g.alt} /></div>
+            <figcaption class="ph__body"><h3 class="h3" style="font-size:1.02rem">{g.title}</h3><p>{g.text}</p></figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--alt" id={t.join.id}>
+    <div class="container form-layout">
+      <div data-reveal="left">
+        <span class="eyebrow">{t.join.eyebrow}</span>
+        <h2 class="h2">{t.join.title}</h2>
+        <p class="lead">{t.join.lead}</p>
+        <div style="margin-top:1.5rem">
+          {t.join.infos.map((i) => (
+            <div class="info"><span class="icon-bubble icon-bubble--jade"><Icon name={i.icon} /></span><div><b>{i.title}</b><p>{i.text}</p></div></div>
+          ))}
+        </div>
+        <p class="note"><Icon name="info" />{t.join.note}</p>
+      </div>
+      <Rsvp form={t.join.form} uid="edu" />
+    </div>
+  </section>
+
+  <Faq data={t.faq} alt={false} />
+  <Cta data={t.cta} lang={lang} />
+</Base>

@@ -1,0 +1,11 @@
+---
+import { images } from '../i18n/images';
+interface Props { k: string; alt: string; eager?: boolean; class?: string; [key: string]: any }
+const { k, alt, eager = false, class: cls, ...rest } = Astro.props;
+const im = images[k];
+---
+<img
+  src={im.src} srcset={im.srcset} sizes={im.srcset ? im.sizes : undefined} width={im.w} height={im.h} alt={alt} class={cls}
+  {...rest}
+  loading={eager ? 'eager' : 'lazy'} decoding="async" fetchpriority={eager ? 'high' : undefined}
+/>

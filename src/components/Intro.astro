@@ -1,0 +1,17 @@
+---
+import Icon from './Icon.astro';
+interface Props { data: any }
+const { data } = Astro.props;
+---
+<section class="intro" data-hero>
+  <div class="container">
+    <span class="chip" data-hero-item><Icon name={data.chip.icon} />{data.chip.text}</span>
+    <h1 class="h1" data-split>{data.title}</h1>
+    <p class="lead" data-hero-item>{data.lead}</p>
+    {data.badges && (
+      <div class="hero__badges--inline" data-hero-item>
+        {data.badges.map((b: any) => <span class="chip chip--jade"><Icon name={b.icon} />{b.title}</span>)}
+      </div>
+    )}
+  </div>
+</section>

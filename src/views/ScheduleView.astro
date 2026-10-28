@@ -1,0 +1,102 @@
+---
+import Base from '../layouts/Base.astro';
+import Intro from '../components/Intro.astro';
+import SectionHead from '../components/SectionHead.astro';
+import Icon from '../components/Icon.astro';
+import Pic from '../components/Pic.astro';
+import Button from '../components/Button.astro';
+import Faq from '../components/Faq.astro';
+import Cta from '../components/Cta.astro';
+import Rsvp from '../components/Rsvp.astro';
+import { getContent, type Lang } from '../i18n/utils';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = getContent(lang);
+const t = c.schedule;
+const f = t.featured;
+---
+<Base lang={lang} routeKey="schedule" title={t.meta.title} description={t.meta.description}>
+  <Intro data={t.hero} />
+
+  <section class="sec sec--tight">
+    <div class="container">
+      <article class="card featured-s" data-reveal>
+        <div class="featured-s__body">
+          <span class="chip" style="align-self:flex-start"><Icon name="stars" />{f.badge}</span>
+          <h2 class="h2" style="font-size:clamp(1.5rem,2.8vw,2.1rem)">{f.title}</h2>
+          <div class="featured-s__meta">{f.meta.map((m) => <span><Icon name={m.icon} />{m.text}</span>)}</div>
+          <p>{f.text}</p>
+          <div class="who" style="margin:0;padding:0"><span class="avatar"><Icon name="groups" /></span><div><b>{f.mentor.name}</b><span>{f.mentor.role}</span></div></div>
+          <div class="hero__actions" style="margin-top:0.5rem">{f.actions.map((a) => <Button {...a} lang={lang} />)}</div>
+        </div>
+        <div class="featured-s__media">
+          <Pic k={f.img} alt={f.alt} data-parallax />
+          <div class="frame__cap"><Icon name="spa" />{f.imgCaption}</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec sec--alt" data-filter-scope>
+    <div class="container">
+      <SectionHead eyebrow={t.list.eyebrow} title={t.list.title} lead={t.list.lead} />
+      <div class="fbar" style="margin-bottom:2rem" data-reveal>
+        {t.filters.map((x, i) => <button class="fchip" type="button" data-filter={x.key} aria-pressed={i === 0 ? 'true' : 'false'}>{x.label}</button>)}
+      </div>
+      <div class="grid g3" data-stagger>
+        {t.list.items.map((s) => (
+          <article class="card card--lift sched" data-filter-item data-cat={s.cat}>
+            <div class="sched__top"><span class="chip chip--jade">{s.audience}</span><span class="icon-bubble"><Icon name={s.icon} /></span></div>
+            <span class="sched__time">{s.time}</span>
+            <h3>{s.title}</h3>
+            <span class="sched__place"><Icon name={s.placeIcon} />{s.place}</span>
+            <p>{s.text}</p>
+            <div class="sched__foot">
+              <span class="who"><span class="avatar">{s.init}</span><span>{s.mentor}</span></span>
+              <a class="btn btn--primary btn--sm" href="#konfirmasi">{s.cta}</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="container">
+      <SectionHead eyebrow={t.etiquette.eyebrow} title={t.etiquette.title} lead={t.etiquette.lead} center jade />
+      <div class="grid g4" data-stagger>
+        {t.etiquette.items.map((e) => (
+          <article class="card card--lift eti">
+            <span class="icon-bubble icon-bubble--jade"><Icon name={e.icon} /></span>
+            <h3 class="h3">{e.title}</h3><p>{e.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--alt" id={t.rsvp.id}>
+    <div class="container form-layout">
+      <div data-reveal="left">
+        <span class="eyebrow">{t.rsvp.eyebrow}</span>
+        <h2 class="h2">{t.rsvp.title}</h2>
+        <p class="lead">{t.rsvp.lead}</p>
+        <div class="venue">
+          <div class="venue__row"><span class="icon-bubble icon-bubble--jade"><Icon name={t.rsvp.venue.icon} /></span><div><b>{t.rsvp.venue.title}</b><p>{t.rsvp.venue.text}</p></div></div>
+          {t.rsvp.venue.extras.map((x) => <span class="venue__x"><Icon name={x.icon} />{x.text}</span>)}
+        </div>
+        <div class="help">
+          <div class="help__t"><span class="icon-bubble"><Icon name={t.rsvp.help.icon} /></span><div><b>{t.rsvp.help.title}</b><span class="s">{t.rsvp.help.text}</span></div></div>
+          <a class="btn btn--jade btn--sm" href="#kontak">{t.rsvp.help.cta}</a>
+        </div>
+      </div>
+      <div>
+        <Rsvp form={t.rsvp.form} uid="sch" />
+        <p class="muted" style="font-size:0.85rem;text-align:center;margin-top:1rem">{t.rsvp.footnote}</p>
+      </div>
+    </div>
+  </section>
+
+  <Faq data={t.faq} alt={false} />
+  <Cta data={t.cta} lang={lang} />
+</Base>

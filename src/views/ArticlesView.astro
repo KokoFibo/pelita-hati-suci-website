@@ -1,0 +1,133 @@
+---
+import Base from '../layouts/Base.astro';
+import Intro from '../components/Intro.astro';
+import SectionHead from '../components/SectionHead.astro';
+import Icon from '../components/Icon.astro';
+import Pic from '../components/Pic.astro';
+import { getContent, formatDate, type Lang } from '../i18n/utils';
+import { getPosts, postPath, categoryIcon } from '../lib/blog';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = getContent(lang);
+const t = c.articles;
+const posts = await getPosts(lang);
+const featured = posts.find((p) => p.data.featured) ?? posts[0];
+const rest = posts.filter((p) => p.id !== featured?.id);
+const catLabel: Record<string, string> = Object.fromEntries(t.filters.map((f) => [f.key, f.label]));
+---
+<Base lang={lang} routeKey="articles" title={t.meta.title} description={t.meta.description}>
+  <Intro data={t.hero} />
+
+  {featured && (
+    <section class="sec sec--tight">
+      <div class="container">
+        <article class="card feature" data-reveal>
+          <div class="feature__img"><Pic k={featured.data.cover} alt="" data-parallax /></div>
+          <div class="feature__body">
+            <span class="chip" style="align-self:flex-start"><Icon name="spa" />{t.featuredLabel.badge}</span>
+            <div class="meta">
+              <b>{t.featuredLabel.kicker}</b>
+              <span><Icon name="schedule" />{featured.data.readMinutes} {c.ui.minRead}</span>
+              <span>{t.post.by} {featured.data.author}</span>
+            </div>
+            <h2 class="h2" style="font-size:clamp(1.5rem,2.8vw,2rem)"><a class="stretch" href={postPath(featured.data.key, lang)}>{featured.data.title}</a></h2>
+            <p>{featured.data.description}</p>
+            <div class="tags">{featured.data.tags.map((x) => <span>#{x}</span>)}</div>
+            <span class="btn btn--primary" style="align-self:flex-start">{t.featuredLabel.cta}<Icon name="arrow_forward" /></span>
+          </div>
+        </article>
+      </div>
+    </section>
+  )}
+
+  <section class="sec sec--alt" data-filter-scope>
+    <div class="container">
+      <SectionHead eyebrow={t.list.eyebrow} title={t.list.title} lead={t.list.lead} />
+      <div class="fbar" data-reveal>
+        {t.filters.map((f, i) => <button class="fchip" type="button" data-filter={f.key} aria-pressed={i === 0 ? 'true' : 'false'}>{f.label}</button>)}
+      </div>
+      <div class="searchbox" data-reveal>
+        <Icon name="search" />
+        <input class="input" type="search" placeholder={c.ui.search} aria-label={c.ui.search} data-filter-search />
+      </div>
+      <div class="grid g3" style="margin-top:2rem" data-stagger>
+        {rest.map((p) => (
+          <article class="card card--lift ph acard" data-filter-item data-cat={p.data.category} data-text={`${p.data.title} ${p.data.description} ${p.data.tags.join(' ')}`.toLowerCase()}>
+            <div class="ph__img">
+              <Pic k={p.data.cover} alt="" />
+              <span class="chip chip--jade"><Icon name={categoryIcon[p.data.category]} />{catLabel[p.data.category]}</span>
+            </div>
+            <div class="ph__body">
+              <div class="meta"><span><Icon name="timer" />{p.data.readMinutes} {c.ui.minRead}</span><span>{formatDate(p.data.date.toISOString(), lang)}</span></div>
+              <h3 class="h3"><a class="stretch" href={postPath(p.data.key, lang)}>{p.data.title}</a></h3>
+              <p>{p.data.description}</p>
+              <span class="link">{t.list.cta}<Icon name="east" /></span>
+            </div>
+          </article>
+        ))}
+      </div>
+      <p class="empty" data-filter-empty hidden>{c.ui.noResult}</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="container">
+      <SectionHead eyebrow={t.quotes.eyebrow} title={t.quotes.title} center />
+      <div class="grid g3" data-stagger>
+        {t.quotes.items.map((q) => (
+          <figure class="card tcard" style="margin:0">
+            <span class="icon-bubble"><Icon name="format_quote" /></span>
+            <blockquote>{q.text}</blockquote>
+            <figcaption class="quote-by" style="margin-top:auto">{q.by}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--alt">
+    <div class="container nl">
+      <div data-reveal="left">
+        <span class="eyebrow eyebrow--jade">{t.newsletter.eyebrow}</span>
+        <h2 class="h2">{t.newsletter.title}</h2>
+        <p class="lead">{t.newsletter.text}</p>
+        <p class="note" style="background:var(--jade-tint)"><Icon name="verified_user" />{t.newsletter.privacy}</p>
+      </div>
+      <div class="formcard" data-form-wrap data-reveal="right">
+        <div data-form-body>
+          <form data-rsvp>
+            <div class="field">
+              <label for="nl-email">{t.newsletter.label}</label>
+              <div class="nlform">
+                <input class="input" id="nl-email" name="email" type="email" required placeholder={t.newsletter.placeholder} autocomplete="email" />
+                <button class="btn btn--primary" type="submit"><Icon name="forward_to_inbox" />{t.newsletter.submit}</button>
+              </div>
+            </div>
+            <p class="muted" style="font-size:0.82rem;margin-top:0.75rem">{t.newsletter.hint}</p>
+          </form>
+        </div>
+        <div class="fsuccess" data-form-success hidden>
+          <span class="icon-bubble"><Icon name="check" /></span>
+          <p>{t.newsletter.success}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="container">
+      <SectionHead eyebrow={t.library.eyebrow} title={t.library.title} lead={t.library.lead} />
+      <div class="grid g3" data-stagger>
+        {t.library.items.map((b) => (
+          <article class="card card--lift lib">
+            <span class="icon-bubble"><Icon name={b.icon} /></span>
+            <span class="chip chip--maroon" style="align-self:flex-start">{b.tag}</span>
+            <h3 class="h3">{b.title}</h3>
+            <p>{b.text}</p>
+            <div class="lib__foot"><small>{b.file}</small><a class="btn btn--jade btn--sm" href="#"><Icon name="download" />{t.library.cta}</a></div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

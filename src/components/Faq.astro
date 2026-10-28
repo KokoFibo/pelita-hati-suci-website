@@ -1,0 +1,19 @@
+---
+import Icon from './Icon.astro';
+import SectionHead from './SectionHead.astro';
+interface Props { data: any; alt?: boolean }
+const { data, alt = true } = Astro.props;
+---
+<section class:list={['sec', { 'sec--alt': alt }]}>
+  <div class="container">
+    <SectionHead eyebrow={data.eyebrow} title={data.title} lead={data.lead || undefined} center />
+    <div class="faq-list" data-stagger>
+      {data.items.map((it: any) => (
+        <details class="faq">
+          <summary><span>{it.q}</span><Icon name="expand_more" /></summary>
+          <div class="faq__body"><p>{it.a}</p></div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

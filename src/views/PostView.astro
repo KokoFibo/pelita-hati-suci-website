@@ -1,0 +1,94 @@
+---
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Pic from '../components/Pic.astro';
+import Cta from '../components/Cta.astro';
+import SectionHead from '../components/SectionHead.astro';
+import { images } from '../i18n/images';
+import { getContent, formatDate, routePath, type Lang } from '../i18n/utils';
+import { getPosts, postPath, blogBase, categoryIcon, type Post } from '../lib/blog';
+interface Props { lang: Lang; post: Post }
+const { lang, post } = Astro.props;
+const c = getContent(lang);
+const t = c.articles;
+const d = post.data;
+const { Content } = await render(post);
+const posts = await getPosts(lang);
+const i = posts.findIndex((p) => p.id === post.id);
+const newer = posts[i - 1];
+const older = posts[i + 1];
+const others = posts.filter((p) => p.id !== post.id);
+const related = [...others.filter((p) => p.data.category === d.category), ...others.filter((p) => p.data.category !== d.category)].slice(0, 3);
+const catLabel: Record<string, string> = Object.fromEntries(t.filters.map((f) => [f.key, f.label]));
+const paths = { id: postPath(d.key, 'id'), zh: postPath(d.key, 'zh') };
+const cta = { icon: 'event_available', eyebrow: c.nav.schedule, title: t.post.ctaTitle, text: t.post.ctaText, actions: [{ label: t.post.ctaButton, href: 'schedule', icon: 'calendar_month', variant: 'light' }], note: '' };
+---
+<Base lang={lang} routeKey="articles" title={`${d.title} — ${c.meta.siteName}`} description={d.description} altPaths={paths} image={images[d.cover as keyof typeof images].src} type="article">
+  <div class="progress" data-progress aria-hidden="true"></div>
+  <article class="post">
+    <header class="post__head container" data-hero>
+      <nav class="crumbs" aria-label="breadcrumb" data-hero-item>
+        <a href={routePath('home', lang)}>{c.nav.home}</a><Icon name="chevron_right" />
+        <a href={blogBase[lang]}>{c.nav.articles}</a>
+      </nav>
+      <span class="chip chip--jade" data-hero-item><Icon name={categoryIcon[d.category]} />{catLabel[d.category]}</span>
+      <h1 class="h1 post__title" data-split>{d.title}</h1>
+      <p class="lead" data-hero-item>{d.description}</p>
+      <div class="meta post__meta" data-hero-item>
+        <span><Icon name="person" />{t.post.by} {d.author}</span>
+        <span><Icon name="calendar_today" />{formatDate(d.date.toISOString(), lang)}</span>
+        <span><Icon name="timer" />{d.readMinutes} {c.ui.minRead}</span>
+      </div>
+    </header>
+
+    <div class="container post__coverwrap" data-reveal="scale">
+      <figure class="post__cover"><Pic k={d.cover} alt="" eager data-parallax /></figure>
+    </div>
+
+    <div class="container">
+      <div class="prose" data-post-body><Content /></div>
+
+      <div class="post__foot">
+        <div class="tags"><b>{t.post.tagsLabel}:</b>{d.tags.map((x) => <span>#{x}</span>)}</div>
+        <div class="share">
+          <span class="muted">{t.post.shareTitle}</span>
+          <button class="btn btn--ghost btn--sm" type="button" data-copy data-copied={t.post.copied}><Icon name="link" /><span>{t.post.copy}</span></button>
+        </div>
+      </div>
+
+      <nav class="pn" aria-label="pagination">
+        {older ? (
+          <a class="card card--lift pn__a" href={postPath(older.data.key, lang)}>
+            <span class="muted"><Icon name="arrow_back" />{t.post.prev}</span><b>{older.data.title}</b>
+          </a>
+        ) : <span></span>}
+        {newer ? (
+          <a class="card card--lift pn__a pn__a--next" href={postPath(newer.data.key, lang)}>
+            <span class="muted">{t.post.next}<Icon name="arrow_forward" /></span><b>{newer.data.title}</b>
+          </a>
+        ) : <span></span>}
+      </nav>
+    </div>
+  </article>
+
+  <section class="sec sec--alt">
+    <div class="container">
+      <SectionHead title={t.post.relatedTitle} lead={t.post.relatedLead} />
+      <div class="grid g3" data-stagger>
+        {related.map((p) => (
+          <article class="card card--lift ph acard">
+            <div class="ph__img"><Pic k={p.data.cover} alt="" /><span class="chip chip--jade"><Icon name={categoryIcon[p.data.category]} />{catLabel[p.data.category]}</span></div>
+            <div class="ph__body">
+              <div class="meta"><span><Icon name="timer" />{p.data.readMinutes} {c.ui.minRead}</span><span>{formatDate(p.data.date.toISOString(), lang)}</span></div>
+              <h3 class="h3"><a class="stretch" href={postPath(p.data.key, lang)}>{p.data.title}</a></h3>
+              <span class="link">{t.list.cta}<Icon name="east" /></span>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Cta data={cta} lang={lang} />
+</Base>

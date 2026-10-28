@@ -1,0 +1,107 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import Icon from '../components/Icon.astro';
+import Faq from '../components/Faq.astro';
+import Cta from '../components/Cta.astro';
+import Rsvp from '../components/Rsvp.astro';
+import { getContent, type Lang } from '../i18n/utils';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = getContent(lang).vegetarian;
+const tones = ['', 'icon-bubble--jade', 'icon-bubble--maroon'];
+---
+<Base lang={lang} routeKey="vegetarian" title={t.meta.title} description={t.meta.description}>
+  <Hero data={t.hero} lang={lang} badgeStyle="chips" />
+
+  <section class="sec sec--alt" id={t.values.id}>
+    <div class="container">
+      <SectionHead eyebrow={t.values.eyebrow} title={t.values.title} lead={t.values.lead} center jade />
+      <div class="grid g3" data-stagger>
+        {t.values.items.map((v, i) => (
+          <article class="card card--lift pillar">
+            <span class="stepnum" aria-hidden="true">{v.num}</span>
+            <span class:list={['icon-bubble', i === 0 ? 'icon-bubble--maroon' : 'icon-bubble--jade']}><Icon name={v.icon} /></span>
+            <span class="pillar__num zh" style="letter-spacing:0.06em">{v.zh}</span>
+            <h3 class="h3">{v.title}</h3>
+            <p>{v.text}</p>
+            <ul class="ticks" style="margin-top:auto"><li><Icon name="check_circle" />{v.point}</li></ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="container">
+      <SectionHead eyebrow={t.dimensions.eyebrow} title={t.dimensions.title} lead={t.dimensions.lead} />
+      <div class="grid g4" data-stagger>
+        {t.dimensions.items.map((d) => (
+          <article class="card card--lift feat">
+            <div class="feat__top"><span class="icon-bubble icon-bubble--jade"><Icon name={d.icon} /></span><span class="chip chip--jade">{d.tag}</span></div>
+            <h3 class="h3">{d.title}</h3><p>{d.text}</p>
+            <span class="link">{d.link}<Icon name="arrow_forward" /></span>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--alt">
+    <div class="container">
+      <SectionHead eyebrow={t.steps.eyebrow} title={t.steps.title} lead={t.steps.lead} center />
+      <div class="grid g4" data-stagger>
+        {t.steps.items.map((s, i) => (
+          <article class="card card--lift feat">
+            <div class="feat__top"><span class="stepnum" aria-hidden="true">{i + 1}</span><span class="chip">{s.tag}</span></div>
+            <h3 class="h3">{s.title}</h3><p>{s.text}</p>
+            <span class="inline ico" style="margin-top:auto;font-weight:600;font-size:0.85rem"><Icon name={s.icon} />{s.note}</span>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" data-filter-scope>
+    <div class="container">
+      <SectionHead eyebrow={t.recipes.eyebrow} title={t.recipes.title} lead={t.recipes.lead} />
+      <div class="fbar" style="margin-bottom:2rem" data-reveal>
+        {t.recipes.filters.map((f, i) => <button class="fchip" type="button" data-filter={f.key} aria-pressed={i === 0 ? 'true' : 'false'}>{f.label}</button>)}
+      </div>
+      <div class="grid g4" data-stagger>
+        {t.recipes.items.map((r) => (
+          <article class="card card--lift ph" data-filter-item data-cat={r.cat}>
+            <div class="ph__img" style="display:grid;place-items:center;background:var(--jade-tint);aspect-ratio:16/10">
+              <Icon name={r.icon} class="ico" /><span class="chip chip--line" style="position:absolute;right:0.8rem;top:0.8rem;left:auto"><Icon name="schedule" />{r.time}</span>
+            </div>
+            <div class="ph__body">
+              <h3 class="h3" style="font-size:1.05rem">{r.title}</h3><p>{r.text}</p>
+              <span class="chip chip--jade" style="align-self:flex-start;margin-top:auto">{r.badge}</span>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--alt" id={t.workshop.id}>
+    <div class="container form-layout">
+      <div data-reveal="left">
+        <span class="eyebrow eyebrow--jade">{t.workshop.eyebrow}</span>
+        <h2 class="h2">{t.workshop.title}</h2>
+        <p class="lead">{t.workshop.lead}</p>
+        <div style="margin-top:1.5rem">
+          {t.workshop.details.map((d) => (
+            <div class="info"><span class="icon-bubble icon-bubble--jade"><Icon name={d.icon} /></span><div><b>{d.title}</b><p>{d.text}</p></div></div>
+          ))}
+        </div>
+        <p class="note"><Icon name="volunteer_activism" />{t.workshop.note}</p>
+      </div>
+      <Rsvp form={t.workshop.form} uid="veg" />
+    </div>
+  </section>
+
+  <Faq data={t.faq} alt={false} />
+  <Cta data={t.cta} lang={lang} />
+</Base>

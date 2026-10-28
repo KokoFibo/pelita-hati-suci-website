@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import Icon from '../components/Icon.astro';
+import Pic from '../components/Pic.astro';
+import Faq from '../components/Faq.astro';
+import Cta from '../components/Cta.astro';
+import { getContent, type Lang } from '../i18n/utils';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = getContent(lang).teachings;
+const tones = ['', 'icon-bubble--jade', 'icon-bubble--maroon'];
+---
+<Base lang={lang} routeKey="teachings" title={t.meta.title} description={t.meta.description}>
+  <Hero data={t.hero} lang={lang} badgeStyle="cards" />
+
+  <section class="sec sec--alt">
+    <div class="container split">
+      <div class="split__copy" data-reveal="left">
+        <span class="eyebrow">{t.glow.eyebrow}</span>
+        <h2 class="h2" style="margin-bottom:1.5rem">{t.glow.title}</h2>
+        {t.glow.paras.map((p) => <p>{p}</p>)}
+      </div>
+      <div class="split__media" data-reveal="right">
+        <div class="frame"><Pic k={t.glow.image} alt={t.glow.alt} data-parallax /></div>
+        <div class="fcard" data-float>
+          <b class="inline"><Icon name={t.glow.card.icon} />{t.glow.card.title}</b><span>{t.glow.card.text}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="pilar">
+    <div class="container">
+      <SectionHead eyebrow={t.pillars.eyebrow} title={t.pillars.title} lead={t.pillars.lead} center />
+      <div class="grid g3" data-stagger>
+        {t.pillars.items.map((p, i) => (
+          <article class="card card--lift pillar">
+            <span class="zh pillar__zh" aria-hidden="true">{p.zh}</span>
+            <span class:list={['icon-bubble', tones[i]]}><Icon name={p.icon} /></span>
+            <span class="pillar__num">{p.num}</span>
+            <h3 class="h3">{p.title}</h3>
+            <p>{p.text}</p>
+            <div class="apply"><b>{t.pillars.applyLabel}</b>{p.apply}</div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--alt" id="keluarga">
+    <div class="container split split--rev">
+      <div class="split__copy" data-reveal="right">
+        <span class="eyebrow eyebrow--jade">{t.family.eyebrow}</span>
+        <h2 class="h2" style="margin-bottom:1.25rem">{t.family.title}</h2>
+        <p>{t.family.text}</p>
+        <ul class="grid g2" style="margin-top:1.75rem;gap:1rem" data-stagger>
+          {t.family.values.map((v) => (
+            <li class="inline" style="align-items:flex-start;gap:0.75rem">
+              <span class="icon-bubble icon-bubble--jade" style="width:2.6rem;height:2.6rem"><Icon name={v.icon} /></span>
+              <span><b style="font-family:var(--font-serif)">{v.title}</b><br /><span class="muted" style="font-size:0.9rem">{v.text}</span></span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="split__media" data-reveal="left">
+        <div class="frame"><Pic k={t.family.image} alt={t.family.alt} data-parallax /><div class="frame__cap"><Icon name="groups" />{t.family.caption}</div></div>
+      </div>
+    </div>
+    <div class="container" style="margin-top:clamp(2.5rem,5vw,4rem)">
+      <div class="qband" data-reveal>
+        <p class="quote">{t.family.quote}</p>
+        <p class="quote-by">{t.family.quoteBy}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="container">
+      <SectionHead eyebrow={t.practices.eyebrow} title={t.practices.title} lead={t.practices.lead} />
+      <div class="grid g4" data-stagger>
+        {t.practices.items.map((p) => (
+          <article class="card card--lift ph">
+            <div class="ph__img"><Pic k={p.img} alt={p.alt} /><span class="chip chip--jade">{p.tag}</span></div>
+            <div class="ph__body">
+              <h3 class="h3">{p.title}</h3><p>{p.text}</p>
+              <Icon name={p.icon} class="ico" />
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Faq data={t.faq} />
+  <Cta data={t.cta} lang={lang} />
+</Base>

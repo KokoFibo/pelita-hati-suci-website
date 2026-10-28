@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="sacredBg" cx="50%" cy="48%" r="52%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="65%" stop-color="#fdfbf7" />
+      <stop offset="88%" stop-color="#f4eee1" />
+      <stop offset="100%" stop-color="#e8dec8" />
+    </radialGradient>
+
+    <!-- Rich Gold Gradients -->
+    <linearGradient id="goldMajor" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5d77f" />
+      <stop offset="35%" stop-color="#c98a2c" />
+      <stop offset="70%" stop-color="#dfa745" />
+      <stop offset="100%" stop-color="#8c5813" />
+    </linearGradient>
+
+    <linearGradient id="goldLight" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#c98a2c" />
+      <stop offset="50%" stop-color="#e9bc5a" />
+      <stop offset="100%" stop-color="#fff2c2" />
+    </linearGradient>
+
+    <linearGradient id="goldRing" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#9e6414" />
+      <stop offset="25%" stop-color="#dfa745" />
+      <stop offset="50%" stop-color="#fff0be" />
+      <stop offset="75%" stop-color="#dfa745" />
+      <stop offset="100%" stop-color="#9e6414" />
+    </linearGradient>
+
+    <!-- Radiant Sacred Flame (Pelita Nurani) -->
+    <linearGradient id="radiantFlame" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#bf5700" />
+      <stop offset="30%" stop-color="#e67e22" />
+      <stop offset="65%" stop-color="#f39c12" />
+      <stop offset="88%" stop-color="#fcd34d" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+
+    <linearGradient id="innerCoreFlame" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#d35400" />
+      <stop offset="50%" stop-color="#f1c40f" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+
+    <!-- Maitri Jade Green Gradient (Kasih Semesta & Ekologi) -->
+    <linearGradient id="maitriJade" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1b4332" />
+      <stop offset="50%" stop-color="#2d6a4f" />
+      <stop offset="100%" stop-color="#40916c" />
+    </linearGradient>
+
+    <!-- Drop Shadow Filter -->
+    <filter id="softGlowShadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#734b12" flood-opacity="0.22" />
+    </filter>
+
+    <filter id="flameAura" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Outer Protective Base Circle -->
+  <circle cx="300" cy="300" r="285" fill="url(#sacredBg)" stroke="url(#goldMajor)" stroke-width="5" />
+
+  <!-- Sacred Concentric Halo Rings (Dharma Light & Universal Embrace) -->
+  <circle cx="300" cy="300" r="268" fill="none" stroke="url(#goldRing)" stroke-width="2" />
+  <circle cx="300" cy="300" r="256" fill="none" stroke="#c98a2c" stroke-width="1.2" stroke-dasharray="3, 6" opacity="0.75" />
+  <circle cx="300" cy="300" r="246" fill="none" stroke="url(#goldMajor)" stroke-width="1" opacity="0.4" />
+
+  <!-- Subtle Radiating Rays Behind Lotus & Flame -->
+  <g opacity="0.2" stroke="#c98a2c" stroke-width="1">
+    <line x1="300" y1="90" x2="300" y2="40" stroke-dasharray="2, 4" />
+    <line x1="240" y1="105" x2="210" y2="60" stroke-dasharray="2, 4" />
+    <line x1="360" y1="105" x2="390" y2="60" stroke-dasharray="2, 4" />
+    <line x1="190" y1="140" x2="140" y2="100" stroke-dasharray="2, 4" />
+    <line x1="410" y1="140" x2="460" y2="100" stroke-dasharray="2, 4" />
+    <line x1="160" y1="200" x2="100" y2="170" stroke-dasharray="2, 4" />
+    <line x1="440" y1="200" x2="500" y2="170" stroke-dasharray="2, 4" />
+  </g>
+
+  <!-- Top Arc Motto: Maitri Kasih Semesta -->
+  <path id="topArcPath" d="M 120 180 A 210 210 0 0 1 480 180" fill="none" />
+  <text font-family="'Noto Serif', 'Playfair Display', Georgia, serif" font-size="12" font-weight="700" fill="#9e6414" letter-spacing="4">
+    <textPath href="#topArcPath" startOffset="50%" text-anchor="middle">
+      MAITRI KARUNA • KASIH SEMESTA
+    </textPath>
+  </text>
+
+  <!-- Central Emblems: Sacred Lotus, Maitri Arc, and Divine Flame -->
+  <g filter="url(#softGlowShadow)">
+
+    <!-- Halo Glow Around Flame -->
+    <circle cx="300" cy="215" r="95" fill="none" stroke="url(#goldLight)" stroke-width="1.5" stroke-dasharray="4, 5" opacity="0.5" />
+    <circle cx="300" cy="215" r="75" fill="none" stroke="#c98a2c" stroke-width="1" opacity="0.35" />
+
+    <!-- 1. Emerald Jade Green Arc of Earth & Compassion (Hu Sheng - 护生) -->
+    <path d="M 150 270 C 185 320 240 348 300 348 C 360 348 415 320 450 270 C 420 306 365 334 300 334 C 235 334 180 306 150 270 Z" 
+          fill="url(#maitriJade)" />
+
+    <!-- 2. Sacred Lotus Petals (Pure Nature - 莲花心) -->
+    <!-- Far-Left Wing Petal (Universal Openness / Da Du) -->
+    <path d="M 300 315 C 220 310 155 265 140 195 C 185 210 235 242 275 288 Z" 
+          fill="url(#goldMajor)" opacity="0.88" />
+
+    <!-- Far-Right Wing Petal -->
+    <path d="M 300 315 C 380 310 445 265 460 195 C 415 210 365 242 325 288 Z" 
+          fill="url(#goldMajor)" opacity="0.88" />
+
+    <!-- Mid-Left Upright Petal -->
+    <path d="M 300 320 C 235 295 190 225 205 145 C 235 188 275 240 290 292 Z" 
+          fill="url(#goldLight)" />
+
+    <!-- Mid-Right Upright Petal -->
+    <path d="M 300 320 C 365 295 410 225 395 145 C 365 188 325 240 310 292 Z" 
+          fill="url(#goldLight)" />
+
+    <!-- 3. Central Sacred Flame (Pelita Hati Nurani - 存良心) -->
+    <!-- Outer Radiant Fire Body -->
+    <path d="M 300 88 C 280 135 245 188 245 240 C 245 284 270 314 300 317 C 330 314 355 284 355 240 C 355 188 320 135 300 88 Z" 
+          fill="url(#radiantFlame)" filter="url(#flameAura)" />
+
+    <!-- Inner Golden Heart Flame -->
+    <path d="M 300 138 C 286 172 265 208 265 244 C 265 272 280 296 300 298 C 320 296 335 272 335 244 C 335 208 314 172 300 138 Z" 
+          fill="url(#innerCoreFlame)" />
+
+    <!-- Sacred Pure Conscience Spark (Benih Nurani Suci) -->
+    <ellipse cx="300" cy="240" rx="14" ry="22" fill="#ffffff" opacity="0.98" />
+    <circle cx="300" cy="240" r="7" fill="#fffdf5" />
+
+    <!-- Lotus Stem Pedestal / Ripple of Peace -->
+    <path d="M 235 354 C 265 348 282 350 300 350 C 318 350 335 348 365 354 C 348 364 326 368 300 368 C 274 368 252 364 235 354 Z" 
+          fill="url(#goldMajor)" />
+    
+    <!-- Dharma Jewel Dots under Pedestal -->
+    <circle cx="300" cy="358" r="4" fill="#9e6414" />
+    <circle cx="275" cy="357" r="3" fill="#c98a2c" />
+    <circle cx="325" cy="357" r="3" fill="#c98a2c" />
+  </g>
+
+  <!-- Typography: Brand Name & Sacred Identity -->
+  <g text-anchor="middle">
+    <!-- Main Title: PELITA HATI SUCI -->
+    <text x="300" y="426" font-family="'Noto Serif', 'Playfair Display', Georgia, serif" font-size="28" font-weight="700" fill="#2d2010" letter-spacing="4">
+      PELITA HATI SUCI
+    </text>
+
+    <!-- Subtitle: VIHARA & GRIYA DHARMA -->
+    <text x="300" y="458" font-family="'Noto Serif', 'Playfair Display', Georgia, serif" font-size="14.5" font-weight="600" fill="#c98a2c" letter-spacing="7" text-transform="uppercase">
+      VIHARA &amp; GRIYA DHARMA
+    </text>
+
+    <!-- Motto / Refinement Line -->
+    <text x="300" y="488" font-family="'Noto Serif', 'Playfair Display', Georgia, serif" font-size="12.5" font-style="italic" fill="#5c503e" letter-spacing="1">
+      &quot;Menyalakan Lentera Nurani, Merajut Harmoni Semesta&quot;
+    </text>
+
+    <!-- Decorative Floral Ornament at Bottom -->
+    <path d="M 240 508 L 280 508 M 320 508 L 360 508" stroke="#c98a2c" stroke-width="1.2" opacity="0.6" />
+    <polygon points="300,503 305,508 300,513 295,508" fill="#c98a2c" />
+    <circle cx="288" cy="508" r="2.5" fill="#c98a2c" />
+    <circle cx="312" cy="508" r="2.5" fill="#c98a2c" />
+
+    <!-- Bottom Inner Arch: Da Jia Ting (Dunia Satu Keluarga) -->
+    <text x="300" y="534" font-family="'Noto Serif', 'Playfair Display', Georgia, serif" font-size="10" font-weight="600" fill="#9e6414" letter-spacing="3" text-transform="uppercase">
+      DUNIA SATU KELUARGA • 大家庭
+    </text>
+  </g>
+</svg>

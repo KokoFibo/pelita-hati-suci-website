@@ -1,0 +1,21 @@
+---
+import Icon from './Icon.astro';
+import Button from './Button.astro';
+import type { Lang } from '../i18n/utils';
+interface Props { data: any; lang: Lang }
+const { data, lang } = Astro.props;
+---
+<section class="sec sec--tight">
+  <div class="container">
+    <div class="cta" data-reveal="scale">
+      <img class="cta__seal" src="/logo-mark-dark.svg" alt="" width="350" height="310" loading="lazy" data-spin />
+      <div class="cta__in">
+        <span class="eyebrow"><Icon name={data.icon} />{data.eyebrow}</span>
+        <h2 class="h2" data-split>{data.title}</h2>
+        <p class="lead">{data.text}</p>
+        <div class="hero__actions">{data.actions.map((a: any) => <Button {...a} lang={lang} />)}</div>
+        {data.note && <p class="cta__note">{data.note}</p>}
+      </div>
+    </div>
+  </div>
+</section>

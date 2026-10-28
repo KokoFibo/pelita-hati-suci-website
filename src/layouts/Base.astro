@@ -1,0 +1,68 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getContent, routePath, htmlLang, type Lang, type RouteKey } from '../i18n/utils';
+import { iconNames } from '../i18n/iconNames';
+
+interface Props { lang: Lang; routeKey: RouteKey; title: string; description: string; altPaths?: Record<Lang, string>; image?: string; type?: 'website' | 'article' }
+const { lang, routeKey, title, description, altPaths, image = '/images/og-emblem.webp', type = 'website' } = Astro.props;
+const paths: Record<Lang, string> = altPaths ?? { id: routePath(routeKey, 'id'), zh: routePath(routeKey, 'zh') };
+const c = getContent(lang);
+const site = Astro.site ?? new URL('https://pelitahatisuci.org');
+const abs = (p: string) => new URL(p, site).href;
+const canonical = abs(paths[lang]);
+const iconFont = `https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&icon_names=${iconNames.join(',')}&display=block`;
+const latinFont = 'family=Noto+Serif:ital,wght@0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700';
+const cjkFont = '&family=Noto+Serif+TC:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700';
+const textFont = `https://fonts.googleapis.com/css2?${latinFont}${lang === 'zh' ? cjkFont : ''}&display=swap`;
+const jsonLd = { '@context': 'https://schema.org', '@type': 'Organization', name: c.meta.siteName, slogan: c.meta.tagline, url: abs('/'), logo: abs('/logo-seal-light.svg') };
+---
+<!doctype html>
+<html lang={htmlLang[lang]} data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="id" href={abs(paths.id)} />
+    <link rel="alternate" hreflang="zh-Hant" href={abs(paths.zh)} />
+    <link rel="alternate" hreflang="x-default" href={abs(paths.id)} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#fcf9f3" />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={c.meta.siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={c.meta.ogLocale} />
+    <meta property="og:image" content={abs(image)} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Light theme is the default. Only an explicit saved choice switches to dark (no flash). -->
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('js');
+        try { d.dataset.theme = localStorage.getItem('phs-theme-v2') === 'dark' ? 'dark' : 'light'; } catch (e) { d.dataset.theme = 'light'; }
+        setTimeout(function () { if (!d.hasAttribute('data-anim')) d.setAttribute('data-anim', 'fail'); }, 4000);
+      })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href={textFont} />
+    <link rel="stylesheet" href={iconFont} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a class="skip" href="#main">{c.ui.skip}</a>
+    <Header lang={lang} routeKey={routeKey} paths={paths} />
+    <main id="main"><slot /></main>
+    <Footer lang={lang} />
+    <script>
+      import '../scripts/main';
+    </script>
+  </body>
+</html>

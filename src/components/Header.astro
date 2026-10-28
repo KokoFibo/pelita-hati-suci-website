@@ -1,0 +1,77 @@
+---
+import Icon from './Icon.astro';
+import { getContent, routePath, otherLang, langLabel, langShort, htmlLang, type Lang, type RouteKey } from '../i18n/utils';
+interface Props { lang: Lang; routeKey: RouteKey; paths: Record<Lang, string> }
+const { lang, routeKey, paths } = Astro.props;
+const c = getContent(lang);
+const other = otherLang(lang);
+const navKeys: RouteKey[] = ['home', 'teachings', 'education', 'vegetarian', 'schedule', 'articles'];
+const otherHref = paths[other];
+const toggleAttrs = { 'data-theme-toggle': '', 'data-to-dark': c.ui.toDark, 'data-to-light': c.ui.toLight, 'aria-label': c.ui.toDark };
+---
+<header class="hdr" data-header>
+  <div class="container hdr__in">
+    <a class="brand" href={routePath('home', lang)} aria-label={`${c.meta.siteName} — ${c.nav.home}`}>
+      <img class="logo-light" src="/logo-mark-light.svg" alt="" width="48" height="43" />
+      <img class="logo-dark" src="/logo-mark-dark.svg" alt="" width="48" height="43" />
+      <span class="brand__t">
+        <span class="brand__n">{c.meta.siteName}</span>
+        <span class="brand__s">{c.meta.tagline}</span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label={c.ui.primaryNav}>
+      {navKeys.map((k) => <a href={routePath(k, lang)} aria-current={routeKey === k ? 'page' : undefined}>{c.nav[k]}</a>)}
+    </nav>
+
+    <div class="hdr__right">
+      <div class="hdr__tools">
+        <div class="lang" role="group" aria-label={c.ui.language} data-lang-switch data-active={lang}>
+          <span class="lang__thumb" aria-hidden="true"></span>
+          {(['id', 'zh'] as Lang[]).map((l) =>
+            l === lang ? (
+              <span class="lang__seg is-on" aria-current="true" lang={htmlLang[l]}>{langLabel[l]}</span>
+            ) : (
+              <a class="lang__seg" href={otherHref} hreflang={htmlLang[l]} lang={htmlLang[l]} aria-label={c.ui.langSwitch}>{langLabel[l]}</a>
+            ),
+          )}
+        </div>
+        <button class="tbtn" type="button" {...toggleAttrs}>
+          <Icon name="dark_mode" class="t-ico--light" /><Icon name="light_mode" class="t-ico--dark" />
+        </button>
+      </div>
+      <div class="hdr__mini">
+        <a class="tbtn tbtn--sm tbtn--lang" href={otherHref} hreflang={other} lang={other} aria-label={c.ui.langSwitch}>
+          {langShort[other]}
+        </a>
+        <button class="tbtn tbtn--sm" type="button" {...toggleAttrs}>
+          <Icon name="dark_mode" class="t-ico--light" /><Icon name="light_mode" class="t-ico--dark" />
+        </button>
+      </div>
+      <button class="burger" type="button" data-burger aria-expanded="false" aria-controls="mnav" aria-label={c.ui.openMenu} data-open-label={c.ui.openMenu} data-close-label={c.ui.closeMenu}>
+        <span class="burger__box" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile / tablet drawer (kept outside <header> so the header's transform can't break position:fixed) -->
+<div class="mnav" id="mnav" data-mnav inert>
+  <div class="mnav__bd" data-mnav-close></div>
+  <div class="mnav__panel" role="dialog" aria-modal="true" aria-label={c.ui.mobileNav}>
+    <div class="mnav__top" data-mnav-item>
+      <a class="brand" href={routePath('home', lang)}>
+        <img class="logo-light" src="/logo-mark-light.svg" alt="" width="44" height="39" />
+        <img class="logo-dark" src="/logo-mark-dark.svg" alt="" width="44" height="39" />
+        <span class="brand__t"><span class="brand__n">{c.meta.siteName}</span></span>
+      </a>
+      <button class="tbtn" type="button" data-mnav-close aria-label={c.ui.closeMenu}><Icon name="close" /></button>
+    </div>
+    <nav class="mnav__list" aria-label={c.ui.mobileNav}>
+      {navKeys.map((k) => (
+        <a href={routePath(k, lang)} data-mnav-item aria-current={routeKey === k ? 'page' : undefined}>{c.nav[k]}<Icon name="east" /></a>
+      ))}
+    </nav>
+    <p class="mnav__tag" data-mnav-item>{c.footer.blessing}</p>
+  </div>
+</div>

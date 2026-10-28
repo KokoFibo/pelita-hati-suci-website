@@ -1,0 +1,179 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+  <defs>
+    <!-- Dark Sacred Background -->
+    <radialGradient id="darkBg" cx="50%" cy="48%" r="52%">
+      <stop offset="0%" stop-color="#222824" />
+      <stop offset="60%" stop-color="#181c19" />
+      <stop offset="85%" stop-color="#121513" />
+      <stop offset="100%" stop-color="#0b0e0c" />
+    </radialGradient>
+
+    <!-- Radiant Gold Gradients for Dark Theme -->
+    <linearGradient id="goldGlowDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff0b8" />
+      <stop offset="35%" stop-color="#f5cc68" />
+      <stop offset="70%" stop-color="#d99932" />
+      <stop offset="100%" stop-color="#a86e18" />
+    </linearGradient>
+
+    <linearGradient id="goldLightShine" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#dfa745" />
+      <stop offset="50%" stop-color="#ffdf88" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+
+    <linearGradient id="goldRingGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c98a2c" />
+      <stop offset="25%" stop-color="#fed678" />
+      <stop offset="50%" stop-color="#ffffff" />
+      <stop offset="75%" stop-color="#fed678" />
+      <stop offset="100%" stop-color="#c98a2c" />
+    </linearGradient>
+
+    <!-- Luminous Sacred Flame (Pelita Nurani di Gelap) -->
+    <linearGradient id="radiantFlameDark" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#d94b00" />
+      <stop offset="28%" stop-color="#f37a1f" />
+      <stop offset="65%" stop-color="#ffb833" />
+      <stop offset="88%" stop-color="#fff2a1" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+
+    <linearGradient id="innerCoreFlameDark" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#e65c00" />
+      <stop offset="50%" stop-color="#ffd000" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+
+    <!-- Glowing Jade Green Gradient (Kasih Semesta) -->
+    <linearGradient id="maitriJadeGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1f573c" />
+      <stop offset="50%" stop-color="#40916c" />
+      <stop offset="100%" stop-color="#74c69d" />
+    </linearGradient>
+
+    <!-- Luminous Filters for Dark Ambiance -->
+    <filter id="goldenGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="flameIntenseGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="16" result="bigBlur" />
+      <feGaussianBlur stdDeviation="6" result="smallBlur" />
+      <feMerge>
+        <feMergeNode in="bigBlur" />
+        <feMergeNode in="smallBlur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Dark Base Protective Circle -->
+  <circle cx="300" cy="300" r="285" fill="url(#darkBg)" stroke="url(#goldRingGlow)" stroke-width="4.5" />
+
+  <!-- Sacred Concentric Rings with Gold Light on Dark -->
+  <circle cx="300" cy="300" r="268" fill="none" stroke="url(#goldGlowDark)" stroke-width="1.8" opacity="0.85" />
+  <circle cx="300" cy="300" r="256" fill="none" stroke="#f5d77f" stroke-width="1.2" stroke-dasharray="3, 6" opacity="0.75" />
+  <circle cx="300" cy="300" r="246" fill="none" stroke="url(#goldGlowDark)" stroke-width="1" opacity="0.35" />
+
+  <!-- Radiating Sacred Rays in Night -->
+  <g opacity="0.35" stroke="#f5cc68" stroke-width="1.2">
+    <line x1="300" y1="90" x2="300" y2="35" stroke-dasharray="2, 5" />
+    <line x1="240" y1="105" x2="205" y2="55" stroke-dasharray="2, 5" />
+    <line x1="360" y1="105" x2="395" y2="55" stroke-dasharray="2, 5" />
+    <line x1="190" y1="140" x2="135" y2="95" stroke-dasharray="2, 5" />
+    <line x1="410" y1="140" x2="465" y2="95" stroke-dasharray="2, 5" />
+    <line x1="160" y1="200" x2="95" y2="165" stroke-dasharray="2, 5" />
+    <line x1="440" y1="200" x2="505" y2="165" stroke-dasharray="2, 5" />
+  </g>
+
+  <!-- Top Arc Motto: Maitri Kasih Semesta in Radiant Gold -->
+  <path id="topArcPathDark" d="M 120 180 A 210 210 0 0 1 480 180" fill="none" />
+  <text font-family="'Noto Serif', Georgia, serif" font-size="12" font-weight="700" fill="#f8d584" letter-spacing="4">
+    <textPath href="#topArcPathDark" startOffset="50%" text-anchor="middle">
+      MAITRI KARUNA • KASIH SEMESTA
+    </textPath>
+  </text>
+
+  <!-- Central Emblems: Sacred Lotus, Maitri Arc, and Glowing Divine Flame -->
+  <g>
+    <!-- Background Halo Glow Behind Flame & Lotus -->
+    <circle cx="300" cy="215" r="95" fill="none" stroke="#fcd34d" stroke-width="1.5" stroke-dasharray="4, 5" opacity="0.4" />
+    <circle cx="300" cy="215" r="75" fill="none" stroke="#e69c24" stroke-width="1" opacity="0.3" />
+
+    <!-- 1. Emerald Jade Green Arc of Earth & Compassion (Hu Sheng - 护生) -->
+    <path d="M 150 270 C 185 320 240 348 300 348 C 360 348 415 320 450 270 C 420 306 365 334 300 334 C 235 334 180 306 150 270 Z" 
+          fill="url(#maitriJadeGlow)" filter="drop-shadow(0 2px 8px rgba(64,145,108,0.5))" />
+
+    <!-- 2. Sacred Lotus Petals in Luminous Gold -->
+    <!-- Far-Left Wing Petal -->
+    <path d="M 300 315 C 220 310 155 265 140 195 C 185 210 235 242 275 288 Z" 
+          fill="url(#goldGlowDark)" opacity="0.9" />
+
+    <!-- Far-Right Wing Petal -->
+    <path d="M 300 315 C 380 310 445 265 460 195 C 415 210 365 242 325 288 Z" 
+          fill="url(#goldGlowDark)" opacity="0.9" />
+
+    <!-- Mid-Left Upright Petal -->
+    <path d="M 300 320 C 235 295 190 225 205 145 C 235 188 275 240 290 292 Z" 
+          fill="url(#goldLightShine)" />
+
+    <!-- Mid-Right Upright Petal -->
+    <path d="M 300 320 C 365 295 410 225 395 145 C 365 188 325 240 310 292 Z" 
+          fill="url(#goldLightShine)" />
+
+    <!-- 3. Central Sacred Flame (Pelita Hati Nurani - 存良心) with Radiant Glow -->
+    <path d="M 300 88 C 280 135 245 188 245 240 C 245 284 270 314 300 317 C 330 314 355 284 355 240 C 355 188 320 135 300 88 Z" 
+          fill="url(#radiantFlameDark)" filter="url(#flameIntenseGlow)" />
+
+    <!-- Inner Golden Heart Flame -->
+    <path d="M 300 138 C 286 172 265 208 265 244 C 265 272 280 296 300 298 C 320 296 335 272 335 244 C 335 208 314 172 300 138 Z" 
+          fill="url(#innerCoreFlameDark)" />
+
+    <!-- Sacred Pure Conscience Spark -->
+    <ellipse cx="300" cy="240" rx="14" ry="22" fill="#ffffff" opacity="0.98" />
+    <circle cx="300" cy="240" r="7" fill="#fffdf2" />
+
+    <!-- Lotus Stem Pedestal / Ripple of Peace -->
+    <path d="M 235 354 C 265 348 282 350 300 350 C 318 350 335 348 365 354 C 348 364 326 368 300 368 C 274 368 252 364 235 354 Z" 
+          fill="url(#goldGlowDark)" />
+    
+    <!-- Dharma Jewel Dots -->
+    <circle cx="300" cy="358" r="4.5" fill="#fbd268" />
+    <circle cx="275" cy="357" r="3.5" fill="#f5cc68" />
+    <circle cx="325" cy="357" r="3.5" fill="#f5cc68" />
+  </g>
+
+  <!-- Typography: Pure Gold & Warm White Lettering on Dark Background -->
+  <g text-anchor="middle">
+    <!-- Main Title: PELITA HATI SUCI -->
+    <text x="300" y="426" font-family="'Noto Serif', Georgia, serif" font-size="28" font-weight="700" fill="#fbf8f0" letter-spacing="4">
+      PELITA HATI SUCI
+    </text>
+
+    <!-- Subtitle: VIHARA & GRIYA DHARMA in Radiant Gold -->
+    <text x="300" y="458" font-family="'Noto Serif', Georgia, serif" font-size="14.5" font-weight="600" fill="#f5cc68" letter-spacing="7" text-transform="uppercase">
+      VIHARA &amp; GRIYA DHARMA
+    </text>
+
+    <!-- Motto / Refinement Line in Muted Gold Ivory -->
+    <text x="300" y="488" font-family="'Noto Serif', Georgia, serif" font-size="12.5" font-style="italic" fill="#cfc7b4" letter-spacing="1">
+      &quot;Menyalakan Lentera Nurani, Merajut Harmoni Semesta&quot;
+    </text>
+
+    <!-- Decorative Floral Accent -->
+    <path d="M 240 508 L 280 508 M 320 508 L 360 508" stroke="#f5cc68" stroke-width="1.2" opacity="0.7" />
+    <polygon points="300,503 305,508 300,513 295,508" fill="#f5cc68" />
+    <circle cx="288" cy="508" r="2.5" fill="#f5cc68" />
+    <circle cx="312" cy="508" r="2.5" fill="#f5cc68" />
+
+    <!-- Bottom Inner Arch -->
+    <text x="300" y="534" font-family="'Noto Serif', Georgia, serif" font-size="10" font-weight="600" fill="#f5cc68" letter-spacing="3" text-transform="uppercase">
+      DUNIA SATU KELUARGA • 大家庭
+    </text>
+  </g>
+</svg>

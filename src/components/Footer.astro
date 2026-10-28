@@ -1,0 +1,37 @@
+---
+import Icon from './Icon.astro';
+import { getContent, routePath, type Lang, type RouteKey } from '../i18n/utils';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = getContent(lang);
+const year = new Date().getFullYear();
+const keys: RouteKey[] = ['teachings', 'education', 'vegetarian', 'schedule', 'articles'];
+---
+<footer class="ftr">
+  <div class="container">
+    <div class="ftr__grid">
+      <div>
+        <a class="brand" href={routePath('home', lang)}>
+          <img class="logo-light" src="/logo-mark-light.svg" alt="" width="48" height="43" loading="lazy" />
+          <img class="logo-dark" src="/logo-mark-dark.svg" alt="" width="48" height="43" loading="lazy" />
+          <span class="brand__t"><span class="brand__n">{c.meta.siteName}</span><span class="brand__s">{c.meta.tagline}</span></span>
+        </a>
+        <p>{c.footer.about}</p>
+        <span class="chip chip--jade ftr__badge"><Icon name="nature_people" />{c.footer.badge}</span>
+      </div>
+      <div>
+        <h4>{c.footer.linksTitle}</h4>
+        <ul>{keys.map((k) => <li><a href={routePath(k, lang)}>{c.nav[k]}</a></li>)}</ul>
+      </div>
+      <div id="kontak">
+        <h4>{c.footer.contactTitle}</h4>
+        <div class="ftr__place">
+          <span class="icon-bubble icon-bubble--jade"><Icon name="location_on" /></span>
+          <div><b>{c.footer.place}</b><p>{c.footer.placeText}</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="ftr__bottom"><span>© <span data-year>{year}</span> {c.footer.copy}</span><i>{c.footer.blessing}</i></div>
+    <p class="ftr__credit">{c.footer.designBy} <a href="https://kokofibo.com" target="_blank" rel="noopener">Kokofibo.com</a></p>
+  </div>
+</footer>

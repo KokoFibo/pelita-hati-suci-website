@@ -1,0 +1,9 @@
+---
+import Icon from './Icon.astro';
+import { resolveHref, type Lang } from '../i18n/utils';
+interface Props { label: string; href: string; icon?: string; variant?: string; lang: Lang; small?: boolean; block?: boolean }
+const { label, href, icon, variant = 'primary', lang, small = false, block = false } = Astro.props;
+---
+<a class:list={['btn', `btn--${variant}`, { 'btn--sm': small, 'btn--block': block }]} href={resolveHref(href, lang)} data-magnetic>
+  {icon && <Icon name={icon} />}<span>{label}</span>
+</a>

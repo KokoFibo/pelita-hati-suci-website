@@ -1,0 +1,126 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import Icon from '../components/Icon.astro';
+import Pic from '../components/Pic.astro';
+import Cta from '../components/Cta.astro';
+import { getContent, resolveHref, type Lang } from '../i18n/utils';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = getContent(lang).home;
+const tones = ['', 'icon-bubble--jade', 'icon-bubble--jade', 'icon-bubble--maroon'];
+---
+<Base lang={lang} routeKey="home" title={t.meta.title} description={t.meta.description}>
+  <Hero data={t.hero} lang={lang} badgeStyle="cards" />
+
+  <section class="sec sec--alt">
+    <div class="container">
+      <SectionHead eyebrow={t.gates.eyebrow} title={t.gates.title} lead={t.gates.lead} center />
+      <div class="grid g4" data-stagger>
+        {t.gates.items.map((g, i) => (
+          <article class="card card--lift feat">
+            <div class="feat__top">
+              <span class:list={['icon-bubble', tones[i]]}><Icon name={g.icon} /></span>
+              <span class="chip chip--line">{g.tag}</span>
+            </div>
+            <h3 class="h3">{g.title}</h3>
+            <p>{g.text}</p>
+            <a class="link" href={resolveHref(g.link.href, lang)}>{g.link.label}<Icon name="arrow_forward" /></a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="container">
+      <SectionHead eyebrow={t.programs.eyebrow} title={t.programs.title} lead={t.programs.lead} />
+      <div class="bento" data-stagger>
+        {t.programs.items.map((p) =>
+          p.size === 'text' ? (
+            <article class="pc pc--text">
+              <div class="pc__body">
+                <span class="icon-bubble icon-bubble--jade"><Icon name={p.icon!} /></span>
+                <span class="chip chip--jade" style="align-self:flex-start">{p.tag}</span>
+                <h3 class="h3">{p.title}</h3>
+                <p>{p.text}</p>
+                <div class="pc__meta">
+                  <span class="inline"><Icon name="timer" />{p.meta}</span>
+                  <span class="chip chip--line">{p.badge}</span>
+                </div>
+              </div>
+            </article>
+          ) : (
+            <article class={`pc pc--img pc--${p.size}`}>
+              <div class="pc__img"><Pic k={p.img!} alt={p.alt!} /></div>
+              <div class="pc__body">
+                <span class="chip" style="align-self:flex-start">{p.kicker ?? p.tag}</span>
+                <h3 class="h3">{p.title}</h3>
+                <p>{p.text}</p>
+                <div class="pc__meta">
+                  <span>{p.meta}</span>
+                  <a class="link" href={resolveHref(p.href, lang)} aria-label={p.title}><Icon name="arrow_forward" /></a>
+                </div>
+              </div>
+            </article>
+          ),
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--alt">
+    <div class="container">
+      <div class="qband" data-reveal>
+        <span class="icon-bubble"><Icon name="format_quote" /></span>
+        <p class="quote">{t.quote.text}</p>
+        <p class="quote-by">{t.quote.by}</p>
+      </div>
+      <div class="grid g3" style="margin-top:clamp(2.5rem,5vw,4rem)" data-stagger>
+        {t.testimonials.map((x) => (
+          <article class="card tcard">
+            <span class="chip chip--jade" style="align-self:flex-start"><Icon name={x.icon} />{x.tag}</span>
+            <blockquote>{x.text}</blockquote>
+            <div class="who"><span class="avatar">{x.initials}</span><div><b>{x.name}</b><span>{x.role}</span></div></div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="container">
+      <div class="sec-head" data-reveal>
+        <span class="eyebrow">{t.calendar.eyebrow}</span>
+        <h2 class="h2" data-split>{t.calendar.title}</h2>
+        <span class="chip chip--jade" style="margin-top:1rem"><Icon name="verified" />{t.calendar.badge}</span>
+      </div>
+      <div class="grid g2" data-stagger>
+        {t.calendar.items.map((e) => (
+          <article class="card card--lift event">
+            <div class="event__when"><small>{e.day}</small><b>{e.time}</b></div>
+            <div class="event__body">
+              <span class="chip chip--jade" style="align-self:flex-start">{e.freq}</span>
+              <h3 class="h3">{e.title}</h3>
+              <p>{e.text}</p>
+              <div class="event__foot">
+                <span class="event__place"><Icon name={e.icon} />{e.place}</span>
+                <a class="btn btn--primary btn--sm" href={resolveHref('schedule', lang)}>{t.calendar.cta}</a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+      <div class="strip" data-reveal>
+        <div class="strip__t">
+          <span class="icon-bubble icon-bubble--jade"><Icon name={t.calendar.note.icon} /></span>
+          <div><b>{t.calendar.note.title}</b><span class="s">{t.calendar.note.text}</span></div>
+        </div>
+        <a class="btn btn--jade btn--sm" href={resolveHref('schedule', lang)}>{t.calendar.note.cta}</a>
+      </div>
+    </div>
+  </section>
+
+  <Cta data={t.cta} lang={lang} />
+</Base>
